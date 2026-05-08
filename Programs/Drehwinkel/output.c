@@ -17,8 +17,10 @@ int output()
     lastTime = t;
     char s[20] = {0};
 
-    //sprintf(s,"%f\n",elapsedTime);
-    //lcdPrintlnS(s);
+    GPIOD->MODER = GPIOD->MODER | 0x01U << 2*8 | 0x01U << 2*7 | 0x01U << 2*6 | 0x01U << 2*5 
+                                | 0x01U << 2*4 | 0x01U << 2*3 | 0x01U << 2*2 | 0x01U << 2*1 | 0x01U; 
+    GPIOD->BSRR = 0xFF << 16;
+    GPIOD->BSRR = (impulseNumber & 0xF);
 
     if(elapsedTime >= MAX_TIME) return -1;
     if(elapsedTime >= MIN_TIME)
@@ -32,7 +34,5 @@ int output()
         lcdPrintlnS(s);
     }
 
-    GPIOD->MODER = GPIOD->MODER | 0x01U << 2*8 | 0x01U << 2*7 | 0x01U << 2*6 | 0x01U << 2*5 
-                                | 0x01U << 2*4 | 0x01U << 2*3 | 0x01U << 2*2 | 0x01U << 2*1 | 0x01U; 
-    GPIOD->ODR = GPIOD->ODR & ~(impulseNumber & 0xF);
+    
 }
