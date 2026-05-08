@@ -117,7 +117,7 @@
   "cmake.ignoreCMakeListsMissing": true,
   "C_Cpp_Runner.msvcBatchPath": "",
   "clangd.arguments": [
-    "--compile-commands-dir=c:\\githubUNI\\GSP\\ITS-BRD-VSC\\Programs\\Praktikum1\\out\\Praktikum1\\ITSboard\\Debug"
+    "--compile-commands-dir=c:\\githubUNI\\GSP\\ITS-BRD-VSC\\Programs\\Drehwinkel\\out\\Drehwinkel\\ITSboard\\Debug"
   ],
   "debug.hideSlowPreLaunchWarning": true,
   "debug.showInStatusBar": "never",

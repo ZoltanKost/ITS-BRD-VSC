@@ -83,7 +83,7 @@ project:
             - --info summarysizes
 
   linker:
-    - script: Praktikum1_ITSboard.sct
+    - script: Drehwinkel_ITSboard.sct
 
   groups:
     # Dokumentationsgruppe
@@ -181,21 +181,22 @@ project:
     # Header-Dateien für das Programm
     - group: Program/User/Inc
       files:
-        - file: Inc/display.h
-        - file: Inc/token.h
-        - file: Inc/scanner.h
         - file: ../../ITS_BRD_LIB/Inc/lcd.h
-        - file: Inc/stack.h
-        - file: reader.h
+        - file: input.h
+        - file: state.h
+        - file: zeit.h
+        - file: update.h
+        - file: output.h
 
     # Benutzerdefinierte Programmdateien
     - group: Program/User/Src
       files:
         - file: Src/main.c
-        - file: Src/display.c
-        - file: Src/scanner.c
-        - file: Src/stack.c
-        - file: reader.c
+        - file: input.c
+        - file: state.c
+        - file: update.c
+        - file: zeit.c
+        - file: output.c
 
   components:
     - component: ARM::CMSIS:CORE

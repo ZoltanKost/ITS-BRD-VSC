@@ -16,6 +16,10 @@
 #include "additionalFonts.h"
 #include "error.h"
 
+#include "token.h"
+#include "scanner.h"
+#include "display.h"
+#include "reader.h"
 
 int main(void) {
 	initITSboard();    // Initialisierung des ITS Boards
@@ -23,14 +27,14 @@ int main(void) {
 	initDisplay();
 
   // Begruessungstext	
-	printStdout("Hallo liebes TI-Labor (c-project)");
+	//printToEchoLine('1');
 	
+	Stack s = {0};
+	stack_init(&s,16);
 	
 	while(1) {
-		T_token = nextToken();
-		Stack s = 
+		readToken(&s);
 	}
 }
-
 
 // EOF

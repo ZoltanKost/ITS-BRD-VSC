@@ -434,3 +434,4 @@ CompileFlags:
       -IC:/Users/mike/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include
     - '-IC:/githubUNI/GSP/ITS-BRD-VSC/Programs/Praktikum1/Inc'
     - '-IC:/githubUNI/GSP/ITS-BRD-VSC/Programs/Praktikum1/../../ITS_BRD_LIB/Inc'
+    - '-IC:/githubUNI/GSP/ITS-BRD-VSC/Programs/Praktikum1/.'
