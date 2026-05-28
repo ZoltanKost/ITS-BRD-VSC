@@ -23,6 +23,9 @@
 #include "update.h"
 #include "zeit.h"
 #include "output.h"
+#include "error.h"
+#include "pinoutput.h"
+
 
 void lcdPrintlnInt(int zahl){
 	 char txt[12];
@@ -43,19 +46,43 @@ int main(void) {
 		1. pins als input initialisieren.
 		PORT->PIN |= PORT_READ_MASK
 	*/
-
 	// Test in Endlosschleife
 	while(1)
 	{
 		// eingabe. 
 		readValues();
 		// update zustand. zeitmessung
-		updateState();
-		
+		error = updateState();
+
+		while(error != 0) 
+		{
+			readButtonInput();
+			if(reset_button == 0)
+			{
+				error = 0;
+				resetState();
+				resetOutputTime();
+				break;
+			}
+		}
 		// berechnen neue werte bas. auf zustand
 		updateValues();
 		//ausgabe
-		output();
+		error = output();
+		
+		pinOutput();
+
+		while(error != 0) 
+		{
+			readButtonInput();
+			if(reset_button == 0)
+			{
+				error = 0;
+				resetState();
+				resetOutputTime();
+				break;
+			}
+		}
 		//HAL_Delay(10000);
 	}
 	return 0;

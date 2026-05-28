@@ -15,8 +15,8 @@ int updateValues()
     calculateSpeedFlag = 0;
     // if time exceeded
     //if()
-    angularSpeed = 0.3 * 90000000 / lastPhaseTimestemp; 
-    angle = impulseNumber * 0.3f;
+    angularSpeed = 27000000 / getDeltaTime(); // 27 000 000 = 0.3 * 90 000 000 
+    angle = number * 0.3f;
 }
 
 int initUpdate()

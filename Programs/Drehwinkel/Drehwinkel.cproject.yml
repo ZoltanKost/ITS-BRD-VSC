@@ -187,6 +187,8 @@ project:
         - file: zeit.h
         - file: update.h
         - file: output.h
+        - file: error.h
+        - file: pinoutput.h
 
     # Benutzerdefinierte Programmdateien
     - group: Program/User/Src
@@ -197,6 +199,8 @@ project:
         - file: update.c
         - file: zeit.c
         - file: output.c
+        - file: error.c
+        - file: pioutput.c
 
   components:
     - component: ARM::CMSIS:CORE

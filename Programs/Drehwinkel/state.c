@@ -6,10 +6,10 @@
 #define STATE_10 2
 
 // current Phase
-static char currentState;
+static char currentState = 255;
 
 int impulseNumber = 0;
-double lastPhaseTimestemp = 0;
+//double lastPhaseTimestemp = 0;
 
 int direction = 0;
 char calculateSpeedFlag = 0;
@@ -18,52 +18,87 @@ char calculateSpeedFlag = 0;
 int updateState()
 {
     if(currentState == input_value) return 0; // if phase didnt change, nothing to seek here!
-    lastPhaseTimestemp = getDeltaTime(); // update timer
+    stempTime(); // update timer
     calculateSpeedFlag = 1;
+    direction = 0;
     switch(input_value)
     {
         case STATE_00: // 00
             if(currentState == STATE_11) 
             {
-                // TODO: ERROR!
+                StateError(3,0);
+                return STATE_ERROR;
             }
-            direction = currentState == STATE_01? -1 : 1; // if altes zustand == 1 -> dreht rckwärts
-            currentState = input_value;
+
+            if(currentState == STATE_01)// if altes zustand == 1 -> dreht rckwärts
+            {
+                direction = -1;
+            }else if(currentState == STATE_10)
+            {
+                direction = 1;
+            }
+
             break;
         case STATE_01: // 01
             if(currentState == STATE_10)
             {
-                //TODO: ERROR!
+                StateError(2,1);
+                return STATE_ERROR;
             }
-            direction = currentState == STATE_11? -1 : 1; // if altes zustand == 3 -> dreht rckwärts
-            currentState = input_value;
+
+            if(currentState == STATE_11)// if altes zustand == 3 -> dreht rckwärts
+            {
+                direction = -1;
+            }else if(currentState == STATE_00)
+            {
+                direction = 1;
+            }
+
             break;
-        case STATE_11: // 10
+        case STATE_11: 
             if(currentState == STATE_00)
             {
-                //TODO: ERROR!
+                StateError(0,3);
+                return STATE_ERROR;
             }
-            direction = currentState == STATE_10? -1 : 1; // if altes zustand == 2 -> dreht rckwärts
-            currentState = input_value;
+
+            if(currentState == STATE_10)// if altes zustand == 2 -> dreht rckwärts
+            {
+                direction = -1;
+            }else if(currentState == STATE_01)
+            {
+                direction = 1;
+            } 
+
             break;
-        case STATE_10: // 11
+        case STATE_10: 
             if(currentState == STATE_01)
             {
-                //TODO: ERROR!
+                StateError(1,2);
+                return STATE_ERROR;
             }
-            direction = currentState == STATE_00? -1 : 1; // if altes zustand == 0 -> dreht rckwärts
-            currentState = input_value;
+            
+            if(currentState == STATE_00)// if altes zustand == 0 -> dreht rckwärts
+            {
+                direction = -1;
+            }else if(currentState == STATE_11)
+            {
+                direction = 1;
+            }
+
             break;
     }
     impulseNumber += direction;
+    currentState = input_value;
+    return 0;
 }
 
-int resetState()
+void resetState()
 {
     initTime();
-    currentState = 0;
+    currentState = 255;
     calculateSpeedFlag = 0;
     impulseNumber = 0;
-    lastPhaseTimestemp = 0;
+    //lastPhaseTimestemp = 0;
     direction = 0;
 }

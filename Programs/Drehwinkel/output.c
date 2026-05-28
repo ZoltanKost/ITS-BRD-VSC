@@ -2,37 +2,74 @@
 
 
 static double elapsedTime = 0;
-static double lastTime = 0;
+static double lastOutputTime = 0;
+
+static char angleString[5];
+static char speedString[5];
 
 static int angle1 = 0;
-
 
 int output()
 {
     double t = getTime();
-    if(t < lastTime)
+    if(t < lastOutputTime)
     {
-        elapsedTime = INT_MAX - lastTime + t;
-    }else elapsedTime += t - lastTime;
-    lastTime = t;
-    char s[20] = {0};
+        elapsedTime = t;
+    }else elapsedTime += t - lastOutputTime;
+    lastOutputTime = t;
 
-    GPIOD->MODER = GPIOD->MODER | 0x01U << 2*8 | 0x01U << 2*7 | 0x01U << 2*6 | 0x01U << 2*5 
-                                | 0x01U << 2*4 | 0x01U << 2*3 | 0x01U << 2*2 | 0x01U << 2*1 | 0x01U; 
-    GPIOD->BSRR = 0xFF << 16;
-    GPIOD->BSRR = (impulseNumber & 0xF);
-
-    if(elapsedTime >= MAX_TIME) return -1;
+    if(elapsedTime >= MAX_TIME) 
+    {
+        //elapsedTime = 0;
+        TimeError(elapsedTime);
+        return -1;
+    }
     if(elapsedTime >= MIN_TIME)
     {
         elapsedTime = 0;
-        if(angle1 != angle)
+        if(angle1 != (int)angle)
         {
             angle1 = angle;
+            char s1[7] = {0};
+            char s2[5] = {0};   
+            sprintf(s1,"%.1f",angle);
+            sprintf(s2,"%.1f",angularSpeed);
+            outputString(s1,s2);
+            //lcdPrintS(s);
         }
-        sprintf(s,"%f %f\n",angle,angularSpeed);
-        lcdPrintlnS(s);
+    }
+    return 0;
+}
+
+void resetOutputTime()
+{
+    lastOutputTime = 0;
+    elapsedTime = 0;
+    //lcdPrintlnS("Time resetted");
+}
+void outputString(char* angle, char* speed)
+{
+    for(int i = 0; i < 5; i++)
+    {
+        if(angle[i] == 0) break;
+        if(angle[i] != angleString[i])
+        {
+            lcdGotoXY(i,5);
+            lcdPrintC(angle[i]);
+            angleString[i] = angle[i];
+        }
     }
 
-    
+    for(int i = 0; i < 5; i++)
+    {
+        if(speed[i] == 0) break;
+        if(speed[i] != speedString[i])
+        {
+            lcdGotoXY(i,7);
+            lcdPrintC(speed[i]);
+            speedString[i] = speed[i];
+        }
+    }
+    strcpy(angle,angleString);
+    strcpy(speed,speedString);
 }
