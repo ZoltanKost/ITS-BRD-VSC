@@ -3,11 +3,11 @@
 int pinOutput()
 {
     // set impulse pins.
-    GPIOD->MODER = GPIOD->MODER | GPIOD_WRITE_MASK; 
+    //GPIOD->MODER = GPIOD->MODER | GPIOD_WRITE_MASK; 
     GPIOD->BSRR = 0xFF << 16; // reset all pins in D
     GPIOD->BSRR = (impulseNumber & 0xFF); 
 
-    GPIOE->MODER = GPIOE->MODER | GPIOE_WRITE_MASK;
+    //GPIOE->MODER = GPIOE->MODER | GPIOE_WRITE_MASK;
 
     GPIOE->BSRR = 0xFF << 16; // reset all pins in E
 

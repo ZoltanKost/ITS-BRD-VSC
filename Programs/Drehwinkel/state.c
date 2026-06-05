@@ -6,7 +6,7 @@
 #define STATE_10 2
 
 // current Phase
-static char currentState = 255;
+char currentState = 255;
 
 int impulseNumber = 0;
 //double lastPhaseTimestemp = 0;
@@ -14,11 +14,16 @@ int impulseNumber = 0;
 int direction = 0;
 char calculateSpeedFlag = 0;
 
+char phasenWechsel = 0;
+char mussPhasenWechselLesen = 0;
 
 int updateState()
 {
     if(currentState == input_value) return 0; // if phase didnt change, nothing to seek here!
+
+    if(currentState == 255) resetOutputTime(); //vor 1 Phase
     stempTime(); // update timer
+    if(mussPhasenWechselLesen) phasenWechsel = 1;
     calculateSpeedFlag = 1;
     direction = 0;
     switch(input_value)
@@ -88,7 +93,7 @@ int updateState()
 
             break;
     }
-    impulseNumber += direction;
+    impulseNumber -= direction;
     currentState = input_value;
     return 0;
 }

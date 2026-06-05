@@ -42,10 +42,6 @@ int main(void) {
   // Begruessungstext	
 	lcdPrintlnS("Hallo liebes TI-Labor (c-project)");
 	initTime();
-	/*
-		1. pins als input initialisieren.
-		PORT->PIN |= PORT_READ_MASK
-	*/
 	// Test in Endlosschleife
 	while(1)
 	{

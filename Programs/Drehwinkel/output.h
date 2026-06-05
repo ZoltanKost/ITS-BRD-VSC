@@ -1,3 +1,5 @@
+#ifndef OUTPUT
+#define OUTPUT
 #include "update.h"
 #include "state.h"
 #include "lcd.h"
@@ -11,3 +13,5 @@
 int output();
 void resetOutputTime();
 void outputString(char* angle, char* speed);
+
+#endif 

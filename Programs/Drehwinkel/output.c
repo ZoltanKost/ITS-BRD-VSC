@@ -18,25 +18,30 @@ int output()
     }else elapsedTime += t - lastOutputTime;
     lastOutputTime = t;
 
-    if(elapsedTime >= MAX_TIME) 
-    {
-        //elapsedTime = 0;
-        TimeError(elapsedTime);
-        return -1;
-    }
     if(elapsedTime >= MIN_TIME)
     {
+        if(elapsedTime < MAX_TIME)
+        {
+            mussPhasenWechselLesen = 1;
+            if(phasenWechsel == 0)
+            {
+                return 0;
+            }
+        }
         elapsedTime = 0;
         if(angle1 != (int)angle)
         {
             angle1 = angle;
             char s1[7] = {0};
-            char s2[5] = {0};   
+            char s2[7] = {0};   
             sprintf(s1,"%.1f",angle);
             sprintf(s2,"%.1f",angularSpeed);
             outputString(s1,s2);
+            mussPhasenWechselLesen = 0;
+            phasenWechsel = 0;
             //lcdPrintS(s);
         }
+        
     }
     return 0;
 }
@@ -49,7 +54,7 @@ void resetOutputTime()
 }
 void outputString(char* angle, char* speed)
 {
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < 7; i++)
     {
         if(angle[i] == 0) break;
         if(angle[i] != angleString[i])
@@ -60,7 +65,7 @@ void outputString(char* angle, char* speed)
         }
     }
 
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < 7; i++)
     {
         if(speed[i] == 0) break;
         if(speed[i] != speedString[i])
@@ -70,6 +75,6 @@ void outputString(char* angle, char* speed)
             speedString[i] = speed[i];
         }
     }
-    strcpy(angle,angleString);
-    strcpy(speed,speedString);
+    //strcpy(angle,angleString);
+    //strcpy(speed,speedString);
 }

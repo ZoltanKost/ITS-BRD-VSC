@@ -34,12 +34,15 @@ int main(void) {
 	lcdPrintlnS("Input connected");
 	// Test in Endlosschleife
 	while(1) {
-		//warten auf Taste
-		openNextFile(); //start der Uebertragunng
-		//lcdGotoXY(1, 1 );
-		lcdPrintlnS("naechstes Bild");
 
-		//int c = nextChar(); // naechste Byte
+		openNextFile(); //start der Uebertragunng
+
+		lcdPrintlnS("taste druecken fuer naechstes Bild");
+
+		//warten auf Taste
+		while(!readButton()) {}
+
+		lcdPrintlnS("naechstes Bild");
 
 		if (processBMP())
 		{
